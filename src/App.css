@@ -39,7 +39,6 @@ h2 {
   height: 2em;
   background: #e0e0e0;
   box-shadow: inset 5px 5px 7px #949494, inset -5px -5px 7px #ffffff;
-  /* box-shadow:  5px 5px 7px #ffffff,  -5px -5px 7px #ffffff; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,7 +50,6 @@ h2 {
   width: 100%;
   height: 1.6em;
   border: none;
-  /* border-color: #e0e0e0; */
   background: transparent;
   outline: none;
   font-size: medium;
@@ -80,7 +78,7 @@ h2 {
   width: 20em;
   height: 2em;
   background-color: #d1d1d1;
-  box-shadow: 5px 5px 7px #555555,-5px -5px 7px #ffffff;
+  box-shadow: 5px 5px 7px #555555, -5px -5px 7px #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -116,11 +114,9 @@ h2 {
   width: 250px;
   min-height: 20px;
   margin: 15px 10px 0px 10px;
-  /* padding-block: 5px; */
   border-radius: 5px;
-  overflow: hidden;
   background: #e0e0e0;
-  box-shadow: 5px 5px 7px #828282, -5px -5px 7px  #ffffff
+  box-shadow: 5px 5px 7px #828282, -5px -5px 7px #ffffff
 }
 
 .app .status .heading {
@@ -128,33 +124,44 @@ h2 {
   justify-content: center;
   padding: 10px;
 }
-.app .status .active {
-  
+
+.app .status .listContainer {
+  margin-block: 3px;
 }
-.app .status .subActive {
+
+.app .status .activityContainer {
   border-top: 1px dashed black;
   padding: 5px;
-  height: 25px;
+  min-height: 25px;
   display: flex;
-  align-items: center;
-  /* justify-content: center; */
-
-}
-.app .status .subActive .activities {
-  /* display: flex; */
-  /* flex-direction: row; */
-  align-items: center;
-  display: inline;
-  color: #252525;
-
 }
 
-.app .status .subActive i {
-  position: relative;
-  /* transform: translateX(100%); */
-}
-.app .status .subActive:hover {
+.app .status .listContainer:hover {
   background: #bebebe;
   /* border-radius: 5px; */
   transition: all 0.4s ease;
+}
+
+.app .status .activityContainer .text {
+  color: #252525;
+}
+
+.app .status .activityContainer h4 {
+  overflow: hidden;
+  word-wrap: break-word;
+  width: 100%;
+
+}
+
+.app .status .activityContainer i {
+}
+
+.last {
+  margin-left: 3px;
+  margin-right: 1px !important;
+
+}
+
+.time {
+  font-size: smaller;
 }

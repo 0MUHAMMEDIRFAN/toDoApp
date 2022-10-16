@@ -18,7 +18,7 @@ switch (day) {
     break;
   case 6: day = "Saturday";
     break;
-  case 7: day = "Sunday";
+  case 0: day = "Sunday";
     break;
   default: day = "Your Day";
 }
@@ -37,10 +37,15 @@ function App() {
         <h2>Whoop, it's {day} 🌝 ☕ </h2>
       </div>
       <div className="input">
-        <input value={toDo} onChange={(event) => setToDo(event.target.value)} type="text" placeholder="🖊️ Add item..." />
-        <i onClick={() => setToDos([...toDos, { id: Date.now(), text: toDo, status: false }])} className="fas fa-plus"></i>
+        <input id="mainInput" value={toDo} onChange={(event) => setToDo(event.target.value)} type="text" placeholder="🖊️ Add item..." />
+        <i onClick={() => {
+          if (toDo !== "") {
+            setToDos([...toDos, { id: Date(), text: toDo, status: false }]);
+            setToDo("");
+          }
+        }} className="fas fa-plus"></i>
       </div>
-      <div className="todos">
+      {/* <div className="todos">
         {toDos.map((obj) => {
 
           return (<div className="todo">
@@ -53,7 +58,7 @@ function App() {
                   return obj2
                 }))
                 // console.log(event.target.checked);
-                // console.log(obj);
+                console.log(obj);
               }}
                 value={obj.status} type="checkbox" name="" id="" />
               <p>{obj.text}</p>
@@ -64,7 +69,7 @@ function App() {
           </div>)
 
         })}
-      </div>
+      </div> */}
       <div className="status">
         <div>
           <div className="completed lists"> <h3 className="heading">Completed</h3>
@@ -72,17 +77,23 @@ function App() {
               toDos.map((obj) => {
                 if (obj.status) {
                   return (
-                    <div className="subActive">
-                      <h4 className="activities">{obj.text}</h4>
-                      <i className="fa-solid fa-rotate-left" onClick={() => {
-                        if(window.confirm()){
-                        setToDos(toDos.filter((obj2) => {
-                          if (obj2.id === obj.id) {
-                            obj2.status = !obj.status
-                          }
-                          return obj2
-                        }))
-                        }}}></i>
+                    <div className="listContainer">
+
+                      <div className="activityContainer">
+                        <h4 className="text">{obj.text}</h4>
+                        <i className="fa-solid fa-rotate-left last" onClick={() => {
+                          // if(window.confirm()){
+                          setToDos(toDos.filter((obj2) => {
+                            if (obj2.id === obj.id) {
+                              obj2.status = !obj.status
+                            }
+                            return obj2
+                          }))
+                        }}></i>
+                      </div>
+                      <div className="timeContainer">
+                        <p className='time'>{obj.id}</p>
+                      </div>
                     </div>
                   )
                 }
@@ -91,24 +102,37 @@ function App() {
           </div>
         </div>
         <div>
-          <div className="active lists"><h3 className="heading">On going</h3>
+          <div className="active lists"><h3 className="heading">Active Task</h3>
+
             {
               toDos.map((obj) => {
-                if (!obj.status) {
+                if (obj.status === false) {
                   return (
-                    <div className="subActive">
-                      <i className='fa-regular fa-circle-check' onClick={() => {
-                        setToDos(toDos.filter((obj2) => {
-                          if (obj2.id === obj.id) {
-                            obj2.status = !obj.status
-                          }
-                          return obj2
-                        }))
-                        }}></i>
-                      <h4 className="activities">{obj.text}</h4>
-                      <i className='fa-solid fa-trash-can' onClick={() => {
+                    <div className="listContainer">
 
-                      }}></i>
+                      <div className="activityContainer">
+                        <i className='fa-regular fa-circle-check' onClick={() => {
+                          setToDos(toDos.filter((obj2) => {
+                            if (obj2.id === obj.id) {
+                              obj2.status = !obj.status
+                            }
+                            return obj2
+                          }))
+                        }}></i>
+                        <h4 className="text">{obj.text}</h4>
+                        <i className='fa-solid fa-trash-can last' onClick={() => {
+                          setToDos(toDos.filter((obj3) => {
+                            if (obj3.id === obj.id) {
+                              obj3.status = undefined;
+                            }
+                            // console.log(obj)
+                            return obj3
+                          }))
+                        }}></i>
+                      </div>
+                      <div className="timeContainer">
+                        <p className='time'>{obj.id}</p>
+                      </div>
                     </div>
                   )
                 }
@@ -117,8 +141,33 @@ function App() {
           </div>
         </div>
         <div>
-          <div className="removed lists"><h3 className="heading">Removed</h3>
-            <i className="fa-solid fa-trash-can-arrow-up"></i>
+          <div className="removed lists"><h3 className="heading">Cancelled</h3>
+            {
+              toDos.map((obj) => {
+                if (obj.status === undefined) {
+                  return (
+                    <div className="listContainer">
+
+                      <div className="activityContainer">
+                        <h4 className='text'>{obj.text}</h4>
+                        <i className="fa-solid fa-trash-can-arrow-up last" onClick={() => {
+                          setToDos(toDos.filter((obj4) => {
+                            if (obj4.id === obj.id) {
+                              obj4.status = false;
+                            }
+                            return obj4;
+                          }))
+                        }}></i>
+                      </div>
+                      <div className="timeContainer">
+                        <p className='time'>{obj.id}</p>
+                      </div>
+                    </div>
+                  )
+                }
+                return null;
+              })
+            }
           </div>
         </div>
       </div>
