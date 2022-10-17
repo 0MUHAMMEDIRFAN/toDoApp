@@ -22,6 +22,13 @@ switch (day) {
     break;
   default: day = "Your Day";
 }
+
+function time(){
+  let time = new Date();
+  return time.toLocaleString();
+}
+
+// console.log(time())
 function App() {
   const [toDos, setToDos] = useState([])
   const [toDo, setToDo] = useState("")
@@ -40,7 +47,7 @@ function App() {
         <input id="mainInput" value={toDo} onChange={(event) => setToDo(event.target.value)} type="text" placeholder="🖊️ Add item..." />
         <i onClick={() => {
           if (toDo !== "") {
-            setToDos([...toDos, { id: Date(), text: toDo, status: false }]);
+            setToDos([...toDos, { id: Date.now(), time: time(), text: toDo, status: false }]);
             setToDo("");
           }
         }} className="fas fa-plus"></i>
@@ -92,7 +99,7 @@ function App() {
                         }}></i>
                       </div>
                       <div className="timeContainer">
-                        <p className='time'>{obj.id}</p>
+                        <p className='time'>{obj.time}</p>
                       </div>
                     </div>
                   )
@@ -131,7 +138,7 @@ function App() {
                         }}></i>
                       </div>
                       <div className="timeContainer">
-                        <p className='time'>{obj.id}</p>
+                        <p className='time'>{obj.time}</p>
                       </div>
                     </div>
                   )
@@ -160,7 +167,7 @@ function App() {
                         }}></i>
                       </div>
                       <div className="timeContainer">
-                        <p className='time'>{obj.id}</p>
+                        <p className='time'>{obj.time}</p>
                       </div>
                     </div>
                   )
