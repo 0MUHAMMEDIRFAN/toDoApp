@@ -23,7 +23,6 @@ body {
   --border-color: #ffffff;
   --hover-color: #101010;
   --hover-icon: #e0e0e0;
-  /* --rotate: rotate(0deg); */
 
 }
 
@@ -40,7 +39,6 @@ body {
   --border-color: #000000;
   --hover-color: #bebebe;
   --hover-icon: #222222;
-  --rotate: rotateY(180deg);
 
 }
 
@@ -67,7 +65,6 @@ body {
   right: 0;
   font-size: 35px;
   margin-right: 2%;
-  transform: var(--rotate);
 }
 .app .mainHeading h1 {
   text-align: center;
@@ -122,12 +119,12 @@ h2 {
   color: var(--icon-color);
   margin-right: 5px;
   transition: all 0.3s ease;
-
+  
 }
 
 .app i:hover {
   color: var(--hover-icon);
-  transform: scale(105%,105%);
+  transform: scale(125%,125%);
 }
 
 .app .status {
