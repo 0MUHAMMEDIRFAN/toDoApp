@@ -3,8 +3,19 @@ import { useState } from 'react';
 
 let date = new Date();
 let day = date.getDay();
-// let completed = document.querySelector(".completed");
-
+let mode;
+if (localStorage.getItem("theme") == null) {
+  mode = "true";
+  localStorage.setItem("theme", mode)
+} else if (localStorage.getItem("theme") === "true") {
+  document.body.classList.remove("light");
+  document.body.classList.add("light");
+  mode = localStorage.getItem("theme");
+} else {
+  document.body.classList.remove("light");
+  mode = localStorage.getItem("theme");
+}
+// localStorage.getItem("mode") ? document.body.classList.add("light") : document.body.classList.remove("light");
 switch (day) {
   case 1: day = "Monday";
     break;
@@ -23,7 +34,7 @@ switch (day) {
   default: day = "Your Day";
 }
 
-function time(){
+function time() {
   let time = new Date();
   return time.toLocaleString();
 }
@@ -32,17 +43,29 @@ function time(){
 function App() {
   const [toDos, setToDos] = useState([])
   const [toDo, setToDo] = useState("")
-  // console.log(toDo);
 
   return (
     <div className="app">
       <div className="mainHeading">
         <h1>ToDo List</h1>
+        <i className="bx bxs-adjust " onClick={() => {
+          if (mode === "true") {
+            mode = "false"
+            document.body.classList.remove("light");
+          } else {
+            mode = "true";
+            document.body.classList.add("light")
+          }
+          localStorage.setItem("theme", mode)
+        }}></i>
       </div>
       <div className="subHeading">
         <br />
         <h2>Whoop, it's {day} 🌝 ☕ </h2>
       </div>
+
+      {/* Input section */}
+
       <div className="input">
         <input id="mainInput" value={toDo} onChange={(event) => setToDo(event.target.value)} type="text" placeholder="🖊️ Add item..." />
         <i onClick={() => {
@@ -52,31 +75,9 @@ function App() {
           }
         }} className="fas fa-plus"></i>
       </div>
-      {/* <div className="todos">
-        {toDos.map((obj) => {
 
-          return (<div className="todo">
-            <div className="left">
-              <input onChange={(event) => {
-                setToDos(toDos.filter((obj2) => {
-                  if (obj2.id === obj.id) {
-                    obj2.status = event.target.checked
-                  }
-                  return obj2
-                }))
-                // console.log(event.target.checked);
-                console.log(obj);
-              }}
-                value={obj.status} type="checkbox" name="" id="" />
-              <p>{obj.text}</p>
-            </div>
-            <div className="right">
-              <i className="fas fa-times"></i>
-            </div>
-          </div>)
+      {/* fist-list section         */}
 
-        })}
-      </div> */}
       <div className="status">
         <div>
           <div className="completed lists"> <h3 className="heading">Completed</h3>
@@ -88,14 +89,15 @@ function App() {
 
                       <div className="activityContainer">
                         <h4 className="text">{obj.text}</h4>
-                        <i className="fa-solid fa-rotate-left last" onClick={() => {
-                          // if(window.confirm()){
-                          setToDos(toDos.filter((obj2) => {
-                            if (obj2.id === obj.id) {
-                              obj2.status = !obj.status
-                            }
-                            return obj2
-                          }))
+                        <i className="fa-solid fa-trash-can last" onClick={() => {
+                          if (window.confirm("Do You want to Permanantly delete ?")) {
+                            setToDos(toDos.filter((obj2) => {
+                              if (obj2.id === obj.id) {
+                                return null;
+                              }
+                              return obj2
+                            }))
+                          }
                         }}></i>
                       </div>
                       <div className="timeContainer">
@@ -109,8 +111,10 @@ function App() {
           </div>
         </div>
         <div>
-          <div className="active lists"><h3 className="heading">Active Task</h3>
 
+          {/* Middle-list section */}
+
+          <div className="active lists"><h3 className="heading">Active Task</h3>
             {
               toDos.map((obj) => {
                 if (obj.status === false) {
@@ -118,7 +122,7 @@ function App() {
                     <div className="listContainer">
 
                       <div className="activityContainer">
-                        <i className='fa-regular fa-circle-check' onClick={() => {
+                        <i className='fa-solid fa-check' onClick={() => {
                           setToDos(toDos.filter((obj2) => {
                             if (obj2.id === obj.id) {
                               obj2.status = !obj.status
@@ -127,7 +131,7 @@ function App() {
                           }))
                         }}></i>
                         <h4 className="text">{obj.text}</h4>
-                        <i className='fa-solid fa-trash-can last' onClick={() => {
+                        <i className='fa-solid fa-xmark last' onClick={() => {
                           setToDos(toDos.filter((obj3) => {
                             if (obj3.id === obj.id) {
                               obj3.status = undefined;
@@ -147,6 +151,9 @@ function App() {
               })}
           </div>
         </div>
+
+        {/* Last-list section */}
+
         <div>
           <div className="removed lists"><h3 className="heading">Cancelled</h3>
             {
@@ -157,13 +164,23 @@ function App() {
 
                       <div className="activityContainer">
                         <h4 className='text'>{obj.text}</h4>
-                        <i className="fa-solid fa-trash-can-arrow-up last" onClick={() => {
+                        <i className="fa-solid fa-rotate-left last" onClick={() => {
                           setToDos(toDos.filter((obj4) => {
                             if (obj4.id === obj.id) {
                               obj4.status = false;
                             }
                             return obj4;
                           }))
+                        }}></i>
+                        <i className="fa-solid fa-trash-can last" onClick={() => {
+                          if (window.confirm("Do You want to Permanantly delete ?")) {
+                            setToDos(toDos.filter((obj2) => {
+                              if (obj2.id === obj.id) {
+                                return null;
+                              }
+                              return obj2
+                            }))
+                          }
                         }}></i>
                       </div>
                       <div className="timeContainer">
