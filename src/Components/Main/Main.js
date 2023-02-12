@@ -63,7 +63,7 @@ function Main() {
                 <div>
                     <i className='bx bxs-check-circle' style={{color:"#946c1d"}}  ></i>
                 </div>
-                <h1>ToDo List</h1>
+                <h1>ToDo List <span style={{fontSize : "15px"}}>Made by <label style={{color : "#946C1D"}}> MUHAMMED IRFAN </label></span></h1>
                 <i className="bx bx-moon " onClick={() => {
                     if (mode === "true") {
                         mode = "false"
