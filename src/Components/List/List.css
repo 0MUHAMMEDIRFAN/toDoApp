@@ -1,0 +1,75 @@
+.app .status {
+
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+
+}
+
+.app .lists {
+  width: 20em;
+  min-height: 20px;
+  margin: 15px 10px 5px 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--main-color);
+  box-shadow: 5px 5px 7px var(--bottom-shadow), -5px -5px 7px var(--top-shadow);
+  transition: all 0.5s ease;
+
+}
+
+.app .status .heading {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.app .status .listContainer {
+  padding-block: 3px;
+  padding-inline: 10px;
+  border-top: 1px dashed var(--border-color);
+}
+
+.app .status .activityContainer {
+  padding: 5px 5px 0px 5px;
+  min-height: 25px;
+  display: flex;
+}
+
+.app .status .listContainer:hover {
+  background: var(--hover-color);
+  /* border-radius: 5px; */
+  transition: all 0.3s ease;
+}
+
+.app .status .activityContainer .text {
+  color: var(--text-color);
+}
+
+.app .status .activityContainer h4 {
+  overflow: hidden;
+  word-wrap: break-word;
+  width: 100%;
+
+}
+
+.last {
+  margin-left: 3px;
+  margin-right: 1px !important;
+
+}
+
+.time {
+  font-size: smaller;
+}
+
+.nothing {
+  width: 100%;
+  text-align: center;
+}
+
+.nothing h5{
+  color: #444444 !important;
+  font-weight: bolder;
+}
