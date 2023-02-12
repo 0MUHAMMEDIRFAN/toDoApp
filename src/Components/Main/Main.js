@@ -1,10 +1,14 @@
 import "./Main.css";
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ToDoContext } from "../../Contexts/Context.js"
+import { Firebase } from "../../Firebase/FirebaseConfig.js"
+import "firebase/compat/firestore"
 
 let date = new Date();
 let day = date.getDay();
 let mode;
+
+
 
 if (localStorage.getItem("theme") == null) {
     mode = "true";
@@ -41,7 +45,12 @@ function time() {
     return time.toLocaleString();
 }
 
+
 function Main() {
+    useEffect(() => {
+        localStorage.getItem("user") || Firebase.firestore().collection("users").doc().set({time:time()}).then(()=>localStorage.setItem("user", time()))
+    },[])
+
     const { toDos, setToDos } = useContext(ToDoContext)
     const [toDo, setToDo] = useState("")
     // console.log(localStorage.getItem("toDos"))
@@ -53,17 +62,16 @@ function Main() {
             setToDo("");
             localStorage.setItem("toDos", JSON.stringify(newTodos))
         }
-        
+
     }
-   
 
     return (
         <div className='app'>
             <div className="mainHeading">
                 <div>
-                    <i className='bx bxs-check-circle' style={{color:"#946c1d"}}  ></i>
+                    <i className='bx bxs-check-circle' style={{ color: "#946c1d" }}  ></i>
                 </div>
-                <h1>ToDo List <span style={{fontSize : "15px"}}>Made by <label style={{color : "#946C1D"}}> MUHAMMED IRFAN </label></span></h1>
+                <h1>ToDo List <span style={{ fontSize: "15px" }}>Made by <label style={{ color: "#946C1D" }}> MUHAMMED IRFAN </label></span></h1>
                 <i className="bx bx-moon " onClick={() => {
                     if (mode === "true") {
                         mode = "false"
