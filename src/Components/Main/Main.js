@@ -2,7 +2,9 @@ import "./Main.css";
 import React, { useContext, useEffect, useState } from 'react';
 import { ToDoContext } from "../../Contexts/Context.js"
 import { Firebase } from "../../Firebase/FirebaseConfig.js"
+import firebase from "firebase/compat/app";
 import "firebase/compat/firestore"
+import "firebase/compat/auth"
 
 let date = new Date();
 let day = date.getDay();
@@ -49,6 +51,9 @@ function time() {
 function Main() {
     useEffect(() => {
         localStorage.getItem("user") || Firebase.firestore().collection("users").doc().set({time:time()}).then(()=>localStorage.setItem("user", time()))
+        firebase.auth().signInAnonymously().then(()=>{
+            console.log("signedIn")
+        })
     },[])
 
     const { toDos, setToDos } = useContext(ToDoContext)
